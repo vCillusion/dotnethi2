@@ -1,0 +1,12 @@
+FROM mcr.microsoft.com/dotnet/sdk:5.0
+WORKDIR /src
+COPY ["dotnethi2/dotnethi2.csproj", "dotnethi2/"]
+RUN dotnet restore "dotnethi2/dotnethi2.csproj"
+COPY dotnethi2/ dotnethi2/
+COPY dotnethi2/.vscode dotnethi2/.vscode
+WORKDIR "/src/dotnethi2"
+RUN dotnet build "dotnethi2.csproj" -c Debug -o /app/build
+RUN dotnet build "dotnethi2.csproj" -c Debug -o /app/publish
+
+WORKDIR /app/publish/
+CMD ["dotnet", "dotnethi2.dll"]
